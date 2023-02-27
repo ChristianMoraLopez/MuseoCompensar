@@ -13,6 +13,8 @@ Esta aplicación permite llevar un registro de los visitantes que ingresan al mu
 
 # Características del programa
 
+[![Fram1](https://media.discordapp.net/attachments/997267642115182602/1079833181106208768/Show.png "Fram1")](https://media.discordapp.net/attachments/997267642115182602/1079833181106208768/Show.png "Fram1")
+
 
 El usuario puede seleccionar el archivo de texto donde se registrarán los datos de los visitantes utilizando el componente JFileChooser.
 El programa calcula el valor que debe pagar cada visitante según su edad y su categoría de afiliación a Compensar.
