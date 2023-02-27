@@ -19,7 +19,7 @@ public class categoritation {
                     pay= pay*0.7;
                     break;
                 case "C":
-                    pay= pay*0.85;
+                    pay= pay*0.5;
                     break;
                 case "N":
                     //pay no se modifica:

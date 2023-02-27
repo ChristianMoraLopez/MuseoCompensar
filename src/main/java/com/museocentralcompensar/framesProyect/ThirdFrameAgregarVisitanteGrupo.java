@@ -4,17 +4,14 @@
  */
 package com.museocentralcompensar.framesProyect;
 
+import com.museocentralcompensar.entities.ChooseFileTxt;
 import com.museocentralcompensar.entities.categoritation;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.util.Scanner;
+import java.io.*;
 
 /**
  *
@@ -172,7 +169,11 @@ public class ThirdFrameAgregarVisitanteGrupo extends javax.swing.JFrame {
         atras.setText("Atrás");
         atras.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                atrasMouseReleased(evt);
+                try {
+                    atrasMouseReleased(evt);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -252,9 +253,13 @@ public class ThirdFrameAgregarVisitanteGrupo extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_ExitMouseReleased
 
-    private void atrasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseReleased
+    private void atrasMouseReleased(java.awt.event.MouseEvent evt) throws FileNotFoundException {//GEN-FIRST:event_atrasMouseReleased
         this.setVisible(false);
-        SecondFrameResumenRegistro.showPanel();
+
+        SecondFrameResumedRegister frame = new SecondFrameResumedRegister();
+        frame.setVisible(true);
+
+
     }//GEN-LAST:event_atrasMouseReleased
 
     private void AgregarVisitanteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_AgregarVisitanteKeyReleased
@@ -307,7 +312,10 @@ public class ThirdFrameAgregarVisitanteGrupo extends javax.swing.JFrame {
     public void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage("E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar\\MuseoCentralCompensar\\Images\\greenICon.png"));
     }
-
+    String name = "";
+    int id = 0;
+    int age = 0;
+    Object category = null;
 
     private void addVisitante(){
         String name = nombreTextField.getText();
@@ -317,6 +325,11 @@ public class ThirdFrameAgregarVisitanteGrupo extends javax.swing.JFrame {
 
         String type = "Visitante";
         double pay = 0;
+
+        if (name == null || name.equals("") || id == 0 || age == 0 || category == null){
+            JOptionPane.showMessageDialog(null, "Por favor llene todos los campos");
+            return;
+        }
         if (age < 18 ){
             pay = categoritation.paymentCategoryAge(age);
         }
@@ -332,17 +345,22 @@ public class ThirdFrameAgregarVisitanteGrupo extends javax.swing.JFrame {
         String visitante = type +"|| Nombre: "+ name + " || Identificación: " + id + " || Edad: " + age + " || Categoría:  " + category.toString();
         JOptionPane.showMessageDialog(null, visitante +" " + "Pago: " + pay);
 
-        try {
-            putInfoTxt(name, id, age, category.toString(), type, pay);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        //SecondFrameResumenRegistro.addVisitante(name, id, age, category.toString(), type);
+        putInfoTxt(name, id, age, category.toString(), type, pay);
+
     }
 
-    private void putInfoTxt(String name, int id, int age, String category, String type, double pay) throws FileNotFoundException {
-        PrintWriter pw = new PrintWriter(new FileOutputStream(new File("Prueba1.txt"), true)); // abrir el archivo en modo "append" para agregar nuevas líneas
-        File file = new File("Prueba1.txt");
+    private void putInfoTxt(String name, int id, int age, String category, String type, double pay)  {
+        File selectedFile = ChooseFileTxt.getSelectedFile();
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(new FileOutputStream(selectedFile, true));
+        } catch (FileNotFoundException e) {
+           //MEnsahe de error:
+            JOptionPane.showMessageDialog(null, "Error al guardar el archivo");
+
+        }
+        File file = new File(selectedFile.getAbsolutePath());
+
 
         //Print name, id, age, category, type if the file is empty:
         if (file.length() == 0) {

@@ -1,3 +1,5 @@
 Christian 1018441569 32 A 25500.0
 
-Carolina 52961359 28 N Visitante 30000.0
+Carolina 321564 32 B Visitante 21000.0
+
+Daniel 312564 65 C Visitante 15000.0

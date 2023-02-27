@@ -156,7 +156,8 @@ public class FirstFrameElegirCrear extends javax.swing.JFrame {
 
             new ChooseFileTxt();
 
-            SecondFrameResumenRegistro.showPanel();
+            SecondFrameResumedRegister.showPanel();
+
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo", "Error", JOptionPane.ERROR_MESSAGE);
             throw new RuntimeException("No se ha encontrado el archivo", e);

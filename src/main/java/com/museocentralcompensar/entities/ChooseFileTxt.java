@@ -50,13 +50,6 @@ public class ChooseFileTxt extends Component  {
         return file;
     }
 
-    public static String [] txtFileIntoArray(File file)
-    {
-        String [] array = new String[]{file.toString()};
-
-        return array;
-
-    }
 
     public static File getSelectedFile() {
         return selectedFile;

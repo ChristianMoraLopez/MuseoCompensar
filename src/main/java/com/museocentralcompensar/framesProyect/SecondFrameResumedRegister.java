@@ -15,26 +15,35 @@ import java.io.FileNotFoundException;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  *
  * @author equipo pc
  */
-public class SecondFrameResumenRegistro extends javax.swing.JFrame  {
+public class SecondFrameResumedRegister extends javax.swing.JFrame  {
+    public  javax.swing.JList<String> listaRegistro;
 
     /**
      * Creates new form SecondFrameResumenRegistro
      */
-    String [] lista = new String [100];
-    public SecondFrameResumenRegistro() throws FileNotFoundException {
+    public SecondFrameResumedRegister() throws FileNotFoundException {
         initComponents();
         setIcon();
-        putElementsInList();
+
+       //
+        DefaultListModel<String> model = new DefaultListModel<>();
+        listaRegistro.setModel(model);
+        putElementsInList(model);
+
+
+
+
     }
 
-    public static void addVisitante(String name, int id, int age, String toString, String type) {
 
-    }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +61,7 @@ public class SecondFrameResumenRegistro extends javax.swing.JFrame  {
         AgregarVisitante = new javax.swing.JButton();
         Exit = new javax.swing.JButton();
         javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+
 
         jButton2.setFont(new java.awt.Font("Futura Bk BT", 1, 12)); // NOI18N
         jButton2.setText("Crear registro");
@@ -86,6 +96,15 @@ public class SecondFrameResumenRegistro extends javax.swing.JFrame  {
 
         AgregarVisitante.setFont(new java.awt.Font("Futura Bk BT", 1, 12)); // NOI18N
         AgregarVisitante.setText("Agregar visitante");
+        AgregarVisitante.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                try {
+                    AgregarVisitanteMouseReleased(evt);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         AgregarVisitante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AgregarVisitanteActionPerformed(evt);
@@ -155,6 +174,11 @@ public class SecondFrameResumenRegistro extends javax.swing.JFrame  {
         
     }//GEN-LAST:event_ExitActionPerformed
 
+    private void AgregarVisitanteMouseReleased(java.awt.event.MouseEvent evt) throws FileNotFoundException {
+        ThirdFrameAgregarVisitanteGrupo frame = new ThirdFrameAgregarVisitanteGrupo();
+        frame.setVisible(true);
+        this.setVisible(false);
+    }
     /**
      * @param args the command line arguments
      */
@@ -172,13 +196,13 @@ public class SecondFrameResumenRegistro extends javax.swing.JFrame  {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SecondFrameResumenRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SecondFrameResumedRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SecondFrameResumenRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SecondFrameResumedRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SecondFrameResumenRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SecondFrameResumedRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SecondFrameResumenRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SecondFrameResumedRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -186,7 +210,7 @@ public class SecondFrameResumenRegistro extends javax.swing.JFrame  {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new SecondFrameResumenRegistro().setVisible(true);
+                    new SecondFrameResumedRegister().setVisible(true);
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -198,36 +222,58 @@ public class SecondFrameResumenRegistro extends javax.swing.JFrame  {
         setIconImage(Toolkit.getDefaultToolkit().getImage("E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar\\MuseoCentralCompensar\\Images\\greenICon.png"));
     }
 
-    public void putElementsInList() throws FileNotFoundException {
+    public void putElementsInList(DefaultListModel model) throws FileNotFoundException {
+        //Change listaRegistro to a list
+        JList listaRegistro = new JList(model);
+        model.clear();
+
+
+
+
         File selectedFile = ChooseFileTxt.getSelectedFile();
+        readTxtFile read = new readTxtFile(selectedFile);
+        Set<String> elementsSet = read.getFileContent();
+
+        String elements = String.join("\n", elementsSet);
+
+
+
         if (selectedFile == null) {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún archivo");
             FirstFrameElegirCrear.showPanel();
             this.setVisible(false);
         }
 
-        readTxtFile read = new readTxtFile(selectedFile);
-        String elements = read.getFileContent();
-        //Cada elemento está separado por un salto de linea:
-        String [] elementsArraySeparatedByJumpLine = separateElements(elements);
-        String [] elementsArraySeparatedBySpace = separateBySpace(elementsArraySeparatedByJumpLine);
-        double payGroup =  totalPay(elementsArraySeparatedBySpace);
-
-
-        //Put elements in the list
-
-        DefaultListModel model = new DefaultListModel();
-       for (int i = 0; i < elementsArraySeparatedByJumpLine.length; i++) {
-           model.addElement(elementsArraySeparatedByJumpLine[i]);
-           listaRegistro.setModel(model);
-       }
 
 
 
 
-        //Put total pay in the list
+//Cada elemento está separado por un salto de linea:
+        String[] elementsArraySeparatedByJumpLine = separateElements(elements);
+        String[] elementsArraySeparatedBySpace = separateBySpace(elementsArraySeparatedByJumpLine);
+        double payGroup = totalPay(elementsArraySeparatedBySpace);
+
+
+//Poner los elementos sobrecribiendo la anterior lista
+        for (int i = 0, j = 1; i < elementsArraySeparatedByJumpLine.length; i++, j++) {
+            //Poner un númreo a cada elemento del array elementsArraySeparatedByJumpLine
+            //Si es un salto de linea, no ponerle un número
+            if (elementsArraySeparatedByJumpLine[i].equals("")) {
+                //remove the element:
+                j--;
+                continue;
+            }
+            elementsArraySeparatedByJumpLine[i] = j + ". " + elementsArraySeparatedByJumpLine[i];
+            model.addElement(elementsArraySeparatedByJumpLine[i]);
+        }
+
+
+
+//Put total pay in the list
         model.addElement("Total a pagar: " + imprimirTotalPay(payGroup));
         listaRegistro.setModel(model);
+
+
     }
 
     public double totalPay(String[] elements) {
@@ -276,7 +322,8 @@ public class SecondFrameResumenRegistro extends javax.swing.JFrame  {
         System.out.println(formattedTotalPay);
         return formattedTotalPay;
     }
-    
+
+
 
 
 
@@ -289,6 +336,10 @@ public class SecondFrameResumenRegistro extends javax.swing.JFrame  {
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listaRegistro;
+
+
     // End of variables declaration//GEN-END:variables
+
+
 }
+
