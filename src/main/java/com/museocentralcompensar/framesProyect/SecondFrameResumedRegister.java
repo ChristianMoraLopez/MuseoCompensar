@@ -7,11 +7,15 @@ package com.museocentralcompensar.framesProyect;
 import com.museocentralcompensar.entities.ChooseFileTxt;
 import com.museocentralcompensar.entities.readTxtFile;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
@@ -120,7 +124,16 @@ public class SecondFrameResumedRegister extends javax.swing.JFrame  {
         });
 
         jLabel1.setFont(new java.awt.Font("Futura Bk BT", 1, 12)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar\\MuseoCentralCompensar\\Images\\bookReg50px.png")); // NOI18N
+
+        try {
+            URL url = new URL("https://media.discordapp.net/attachments/990816829993811978/1080167480556789850/bookReg50px.png");
+            BufferedImage image = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(image);
+            jLabel1.setIcon(icon);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
         jLabel1.setText("El registro de visitantes del día del día es:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -217,11 +230,18 @@ public class SecondFrameResumedRegister extends javax.swing.JFrame  {
             }
         });
     }
-    
-    public void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage("E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar\\MuseoCentralCompensar\\Images\\greenICon.png"));
-    }
 
+    public void setIcon() {
+        try {
+            URL url = new URL("https://media.discordapp.net/attachments/990816829993811978/1080166679386013746/greenICon.png");
+            BufferedImage image = ImageIO.read(url);
+            File tempFile = File.createTempFile("icon", ".png");
+            ImageIO.write(image, "png", tempFile);
+            setIconImage(ImageIO.read(tempFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void putElementsInList(DefaultListModel model) throws FileNotFoundException {
         //Change listaRegistro to a list
         JList listaRegistro = new JList(model);

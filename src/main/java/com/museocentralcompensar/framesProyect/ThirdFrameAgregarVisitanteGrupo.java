@@ -7,11 +7,14 @@ package com.museocentralcompensar.framesProyect;
 import com.museocentralcompensar.entities.ChooseFileTxt;
 import com.museocentralcompensar.entities.categoritation;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 
 /**
  *
@@ -186,7 +189,16 @@ public class ThirdFrameAgregarVisitanteGrupo extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Futura Bk BT", 1, 12)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon("E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar\\MuseoCentralCompensar\\Images\\noteAgregar50px.png")); // NOI18N
+        try {
+            URL url = new URL("https://media.discordapp.net/attachments/990816829993811978/1080168243769126952/noteAgregar50px.png");
+            BufferedImage image = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(image);
+            jLabel1.setIcon(icon);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+
         jLabel1.setText("Agrega visitante o grupo al registro:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -310,7 +322,15 @@ public class ThirdFrameAgregarVisitanteGrupo extends javax.swing.JFrame {
     }
 
     public void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage("E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar\\MuseoCentralCompensar\\Images\\greenICon.png"));
+        try {
+            URL url = new URL("https://media.discordapp.net/attachments/990816829993811978/1080166679386013746/greenICon.png");
+            BufferedImage image = ImageIO.read(url);
+            File tempFile = File.createTempFile("icon", ".png");
+            ImageIO.write(image, "png", tempFile);
+            setIconImage(ImageIO.read(tempFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     String name = "";
     int id = 0;

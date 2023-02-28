@@ -3,10 +3,21 @@ package com.museocentralcompensar.entities;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class createNewTxtFile {
-    String iconPath = "E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar\\MuseoCentralCompensar\\Images\\greenICon100px.png";
-    ImageIcon icon = new ImageIcon(iconPath);
+
+    ImageIcon icon;
+
+    {
+        try {
+            icon = new ImageIcon(new URL("https://media.discordapp.net/attachments/990816829993811978/1080166283129127023/greenICon100px.png"));
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     PrintWriter outputFile;
 

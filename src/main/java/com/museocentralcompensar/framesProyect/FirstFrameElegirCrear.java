@@ -7,10 +7,14 @@ package com.museocentralcompensar.framesProyect;
 import com.museocentralcompensar.entities.ChooseFileTxt;
 import com.museocentralcompensar.entities.createNewTxtFile;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  *
@@ -55,7 +59,14 @@ public class FirstFrameElegirCrear extends javax.swing.JFrame {
         jLabel1.setText("Bienvenido al registro de Visitantes de:");
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        jLabel2.setIcon(new javax.swing.ImageIcon("E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar\\MuseoCentralCompensar\\Images\\icon100px.png")); // NOI18N
+        try {
+            URL url = new URL("https://media.discordapp.net/attachments/990816829993811978/1080162375078006864/icon100px.png");
+            BufferedImage image = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(image);
+            jLabel2.setIcon(icon);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         jLabel2.setText("Museo Central Compensar");
 
         jLabel3.setFont(new java.awt.Font("Futura Bk BT", 0, 13)); // NOI18N
@@ -206,7 +217,15 @@ public class FirstFrameElegirCrear extends javax.swing.JFrame {
 
     }
     public void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage("E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar\\MuseoCentralCompensar\\Images\\greenICon.png"));
+        try {
+            URL url = new URL("https://media.discordapp.net/attachments/990816829993811978/1080166679386013746/greenICon.png");
+            BufferedImage image = ImageIO.read(url);
+            File tempFile = File.createTempFile("icon", ".png");
+            ImageIO.write(image, "png", tempFile);
+            setIconImage(ImageIO.read(tempFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

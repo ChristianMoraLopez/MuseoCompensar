@@ -1,9 +1,13 @@
 package com.museocentralcompensar.entities;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class ChooseFileTxt extends Component  {
 
@@ -16,9 +20,13 @@ public class ChooseFileTxt extends Component  {
             //change initial directory:
             this.setCurrentDirectory(new java.io.File("E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar"));
 
-            dialog.setIconImage(new
-                    javax.swing.ImageIcon("E:\\ProgrammingStudy\\Ucompensar\\Semestre II\\Algoritmos y Programación II\\Profundización\\MuseoCentralCompensar\\MuseoCentralCompensar\\Images\\greenICon.png").getImage());
-
+            try {
+                URL imageUrl = new URL("https://media.discordapp.net/attachments/990816829993811978/1080166679386013746/greenICon.png");
+                Image image = ImageIO.read(imageUrl);
+                dialog.setIconImage(image);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             return dialog;
 
         }};
