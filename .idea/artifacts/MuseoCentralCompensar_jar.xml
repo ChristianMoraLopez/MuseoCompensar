@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MuseoCentralCompensar:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MuseoCentralCompensar_jar</output-path>
+    <root id="archive" name="MuseoCentralCompensar.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="MuseoCentralCompensar" />
+    </root>
+  </artifact>
+</component>
